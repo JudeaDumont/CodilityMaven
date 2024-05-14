@@ -12,15 +12,35 @@ import java.util.Hashtable;
 public class SolitaireNumbers {
 
     public static Long max = null;
-    public static Hashtable<ArrayList<Integer>, Long> memo = new Hashtable<>();
+    public static Hashtable<String, Long> memo = new Hashtable<>();
 
     public static Long traverseMemoizeAndFindMax(int[] a, ArrayList<Integer> newJumpPattern) {
-        long total = 0;
         int j = 0;
-        total += a[j];
-        for (int i = 0; i < newJumpPattern.size(); ++i) {
-            j+=newJumpPattern.get(i);
+
+        //look for the memo
+        Long memoMax = null;
+        int k = 0;
+        for (int i = newJumpPattern.size() - 1; i > -1; i--) { //reverse iteration will find best match faster
+            if (memo.containsKey(newJumpPattern.subList(0, i).toString())) {
+                memoMax = memo.get(newJumpPattern.subList(0, i).toString());
+                k = i-1;
+                break;
+            }
+        }
+        long total = a[0];
+        if (memoMax!=null) {
+            total = memoMax; //always happens because of how the memos will be set. 0 will always be set.
+        }
+
+        ArrayList<Integer> newMemo = new ArrayList<>(newJumpPattern.subList(0, k+1));
+        for (; k < newJumpPattern.size(); ++k) {
+            j += newJumpPattern.get(k);
             total += a[j];
+            if(total > 20){
+                int pause;
+            }
+            newMemo.add(newJumpPattern.get(k));
+            memo.put(newMemo.toString(),total);
         }
         if (max == null) {
             max = total;
