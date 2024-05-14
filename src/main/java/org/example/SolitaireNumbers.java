@@ -1,8 +1,7 @@
 package org.example;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 //first, to get better time performance, I will need to figure out why they are being duplicated
 // and fix it such that !jumpPatternSets.contains(newJumpPattern) is not necessary.
@@ -11,12 +10,33 @@ import java.util.ArrayList;
 //actually I am going to use the above pattern to make sure all the jump patterns are met.
 // and store them via string in a hashtable
 public class SolitaireNumbers {
+
+    public static Long max = null;
+    public static Hashtable<ArrayList<Integer>, Long> memo = new Hashtable<>();
+
+    public static Long traverseMemoizeAndFindMax(int[] a, ArrayList<Integer> newJumpPattern) {
+        long total = 0;
+        int j = 0;
+        total += a[j];
+        for (int i = 0; i < newJumpPattern.size(); ++i) {
+            j+=newJumpPattern.get(i);
+            total += a[j];
+        }
+        if (max == null) {
+            max = total;
+        } else if (total > max) {
+            max = total;
+        } else {
+        }
+        return max;
+    }
+
     public static ArrayList<ArrayList<Integer>> solitaireNumbers(int[] A) {
         //2^n-1 where n is length of A
 
         //first one is just all ones
         ArrayList<Integer> first = new ArrayList<>();
-        for (int i = 0; i < A.length; ++i) {
+        for (int i = 0; i < A.length - 1; ++i) {
             first.add(1);
         }
 
@@ -24,6 +44,9 @@ public class SolitaireNumbers {
         //debug
         ArrayList<ArrayList<Integer>> allJumpPatterns = new ArrayList<>();
         allJumpPatterns.add(first);
+
+        //first call to the actual traversal method
+        traverseMemoizeAndFindMax(A, first);
 
 
         //relies on early return to not have superfluous iterations,
@@ -37,7 +60,7 @@ public class SolitaireNumbers {
 
         ArrayList<ArrayList<Integer>> nextSet;
 
-        while (currentJumpPatternSet.size()>0) {
+        while (currentJumpPatternSet.size() > 0) {
             nextSet = new ArrayList<>();
             for (int i = 0; i < currentJumpPatternSet.size(); ++i) {
                 for (int j = 0; j < currentJumpPatternSet.get(i).size() - 1; ++j) {
@@ -54,8 +77,10 @@ public class SolitaireNumbers {
                         //debug
                         allJumpPatterns.add(newJumpPattern);
 
+                        traverseMemoizeAndFindMax(A, newJumpPattern);
                         //this is where we would call a function with the jump pattern
                         // and that function would be caching results per jump and doing a setmax etc.
+
                     }
                 }
             }
