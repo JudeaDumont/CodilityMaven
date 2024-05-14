@@ -36,9 +36,6 @@ public class SolitaireNumbers {
         for (; k < newJumpPattern.size(); ++k) {
             j += newJumpPattern.get(k);
             total += a[j];
-            if(total > 20){
-                int pause;
-            }
             newMemo.add(newJumpPattern.get(k));
             memo.put(newMemo.toString(),total);
         }
