@@ -1,135 +1,90 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-//first, to get better time performance, I will need to figure out why they are being duplicated
-// and fix it such that !jumpPatternSets.contains(newJumpPattern) is not necessary.
-// and then therefore, that container is not necessary.
-
-//actually I am going to use the above pattern to make sure all the jump patterns are met.
-// and store them via string in a hashtable
 public class SolitaireNumbers {
+    //process 7182727 jumps per chunk
+    public static int solitaireNumbers(int[] A) {
+        String bitmask = getPositiveBitMap(A);
+        int allJumps = getAllJumps(bitmask, A);
+        ArrayList<String> allPossibleJumpPatterns = getAllPossibleJumpPatterns(bitmask);
+        int max = getMaxPossiblePoints(allPossibleJumpPatterns, allJumps, A);
+        return max;
+    }
 
-    public static Long max = null;
-    public static Hashtable<String, Long[]> memo = new Hashtable<>();
-
-    public static ArrayList<Integer> chosenJumpPattern = null;
-
-    public static Long traverseMemoizeAndFindMax(int[] a, ArrayList<Integer> newJumpPattern) {
-        int j = 0;
-
-        //look for the memo
-        Long memoMax = null;
-        int k = 0;
-        for (int i = newJumpPattern.size() - 1; i > -1; i--) { //reverse iteration will find best match faster
-            if (memo.containsKey(newJumpPattern.subList(0, i).toString())) {
-                Long[] totalAtJump = memo.get(newJumpPattern.subList(0, i).toString());
-                memoMax = totalAtJump[0];
-                j = Math.toIntExact(totalAtJump[1]);
-                k = i - 1;
-                break;
+    private static int getMaxPossiblePoints(ArrayList<String> allPossibleJumpPatterns, int allJumps, int[] a) {
+        int max = allJumps;
+        for (int i = 0; i < allPossibleJumpPatterns.size(); i++) {
+            int thisJump = allJumps;
+            String s = allPossibleJumpPatterns.get(i);
+            for (int c = 0; c < s.length(); c++) {
+                if (s.charAt(c) == '0') {
+                    thisJump -= a[c];
+                    int pause = 0;
+                }
             }
-        }
-        long total = a[0];
-        if (memoMax != null) {
-            total = memoMax; //always happens because of how the memos will be set. 0 will always be set.
-        }
-
-        ArrayList<Integer> newMemo = new ArrayList<>(newJumpPattern.subList(0, k));
-        for (; k < newJumpPattern.size(); ++k) {
-            newMemo.add(newJumpPattern.get(k));
-            memo.put(newMemo.toString(), new Long[]{total, (long) j});
-            j += newJumpPattern.get(k);
-            total += a[j];
-            int pause = 0;
-        }
-        if (max == null || total > max) {
-            max = total;
-            chosenJumpPattern = newJumpPattern;
+            if (thisJump > max) {
+                max = thisJump;
+            }
         }
         return max;
     }
 
-    public static Long solitaireNumbers(int[] A) {
-        //2^n-1 where n is length of A
-
-        //first one is just all ones
-        ArrayList<Integer> first = new ArrayList<>();
-        for (int i = 0; i < A.length - 1; ++i) {
-            first.add(1);
-        }
-
-        //first call to the actual traversal method
-        traverseMemoizeAndFindMax(A, first);
-
-        //relies on early return to not have superfluous iterations,
-        // but it is close to Math.pow(2, A.length - 1),
-        // with the weirdness being that there are no values above 6 in jump patterns
-        double iterations = Math.pow(2, A.length - 1);
-
-        //we work in jumpPatternSets, removing the ones we have worked through already.
-        ArrayList<ArrayList<Integer>> currentJumpPatternSet = new ArrayList<>();
-        currentJumpPatternSet.add(first);
-
-        ArrayList<ArrayList<Integer>> nextSet;
-
-        while (currentJumpPatternSet.size() > 0) {
-            nextSet = new ArrayList<>();
-            for (int i = 0; i < currentJumpPatternSet.size(); ++i) {
-                for (int j = 0; j < currentJumpPatternSet.get(i).size() - 1; ++j) {
-                    ArrayList<Integer> newJumpPattern = new ArrayList<>(currentJumpPatternSet.get(i));
-                    int end = newJumpPattern.get(newJumpPattern.size() - 1);
-                    newJumpPattern.remove(newJumpPattern.size() - 1);
-                    int newValue = currentJumpPatternSet.get(i).get(j) + end;
-                    if (newValue > 6) {
-                        continue;
-                    }
-                    newJumpPattern.set(j, newValue);
-                    if (!nextSet.contains(newJumpPattern)) {
-                        nextSet.add(newJumpPattern);
-
-                        traverseMemoizeAndFindMax(A, newJumpPattern);
-                        //this is where we would call a function with the jump pattern
-                        // and that function would be caching results per jump and doing a setmax etc.
-
-                    }
-                }
+    private static ArrayList<String> getAllPossibleJumpPatterns(String bitmask) {
+        ArrayList<String> jumpPatterns = new ArrayList<>();
+        String inbetweenDigits = getInbetweenDigits(bitmask);
+        for (long i = 0; i < Long.parseLong(inbetweenDigits, 2); ++i) {
+            String jumpPattern = "1" + getBinaryString(i, inbetweenDigits.length()) + "1";
+            if (isConformentPattern(jumpPattern)) {
+                jumpPatterns.add(jumpPattern);
             }
-            //now we want to move on to the next set
-            currentJumpPatternSet = nextSet;
         }
+        return jumpPatterns;
+    }
 
-        //                      1, 1, 1, 1, 1
-        //                      2, 1, 1, 1,
-        //                      1, 2, 1, 1
-        //                      1, 1, 2, 1
-        //                      1, 1, 1, 2
-        //                      2, 2, 1
-        //                      2, 1, 2
-        //                      1, 2, 2
-        //                      3, 1, 1
-        //                      1, 3, 1
-        //                      1, 1, 3
-        //                      3, 2
-        //                      2, 3
-        //                      4, 1
-        //                      1, 4
-        //                      5
+    public static String getBinaryString(long i, long length) {
+        StringBuilder sb = new StringBuilder();
+        String binaryString = Long.toBinaryString(i);
+        sb.append(binaryString);
+        for (long j = binaryString.length(); j < length; j++) {
+            sb.insert(0, '0');
+        }
+        return sb.toString();
+    }
 
-        //                      1, 1, 1, 1
-        //                      2, 1, 1
-        //                      1, 2, 1
-        //                      1, 1, 2
-        //                      2, 2
-        //                      3, 1
-        //                      1, 3
-        //                      4
+    public static boolean isConformentPattern(String jumpPattern) {
+        short consecutiveZeros = 0;
+        for (int i = 0; i < jumpPattern.length(); i++) {
+            if (jumpPattern.charAt(i) == '0') {
+                ++consecutiveZeros;
+                if (consecutiveZeros == 6) {
+                    return false;
+                }
+            } else { //it's a 1
+                consecutiveZeros = 0;
+            }
+        }
+        return true;
+    }
 
-        //first is              1, 1, 1
-        //then it needs to be   2, 1
-        //then                  1, 2
-        //then                  3
-        return max;
+    public static String getInbetweenDigits(String bitmask) {
+        return bitmask.substring(1, bitmask.length() - 1);
+    }
+
+    public static int getAllJumps(String bitmask, int[] A) {
+        int total = 0;
+        for (int i = 0; i < bitmask.length(); i++) {
+            if (bitmask.charAt(i) == '1') {
+                total += A[i];
+            }
+        }
+        return total;
+    }
+
+    public static String getPositiveBitMap(int[] a) {
+        StringBuilder b = new StringBuilder();
+        for (int i : a) {
+            b.append(1);
+        }
+        return b.toString();
     }
 }
