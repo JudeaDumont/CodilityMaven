@@ -51,7 +51,7 @@ public class SolitaireNumbers {
         return max;
     }
 
-    public static ArrayList<ArrayList<Integer>> solitaireNumbers(int[] A) {
+    public static Long solitaireNumbers(int[] A) {
         //2^n-1 where n is length of A
 
         //first one is just all ones
@@ -59,10 +59,6 @@ public class SolitaireNumbers {
         for (int i = 0; i < A.length - 1; ++i) {
             first.add(1);
         }
-
-        //debug
-        ArrayList<ArrayList<Integer>> allJumpPatterns = new ArrayList<>();
-        allJumpPatterns.add(first);
 
         //first call to the actual traversal method
         traverseMemoizeAndFindMax(A, first);
@@ -92,8 +88,6 @@ public class SolitaireNumbers {
                     newJumpPattern.set(j, newValue);
                     if (!nextSet.contains(newJumpPattern)) {
                         nextSet.add(newJumpPattern);
-                        //debug
-                        allJumpPatterns.add(newJumpPattern);
 
                         traverseMemoizeAndFindMax(A, newJumpPattern);
                         //this is where we would call a function with the jump pattern
@@ -104,10 +98,7 @@ public class SolitaireNumbers {
             }
             //now we want to move on to the next set
             currentJumpPatternSet = nextSet;
-            int check = 0;
         }
-
-        return allJumpPatterns;
 
         //                      1, 1, 1, 1, 1
         //                      2, 1, 1, 1,
@@ -139,5 +130,6 @@ public class SolitaireNumbers {
         //then it needs to be   2, 1
         //then                  1, 2
         //then                  3
+        return max;
     }
 }

@@ -9,46 +9,42 @@ public class TestJumpPatterns {
 
     @Test
     void solataireNumbers() {
-
-        Gson gson = new Gson();
-        String json = gson.toJson(SolitaireNumbers.solitaireNumbers(new int[]{1, -2, 0}));
-        Assertions.assertEquals("[[1,1],[2]]", json);
-        Assertions.assertEquals(1, SolitaireNumbers.max);
+        Assertions.assertEquals(1, SolitaireNumbers.solitaireNumbers(new int[]{1, -2, 0}));
     }
 
     @Test
     void solataireNumbersX3() {
-        Gson gson = new Gson();
-        String json = gson.toJson(SolitaireNumbers.solitaireNumbers(new int[]{1, -2, 0, 7, -14, -80, 1}));
-
-        Assertions.assertEquals(
-                "[[1,1,1,1,1,1],[2,1,1,1,1],[1,2,1,1,1],[1,1,2,1,1],[1,1,1,2,1],[1,1,1,1,2],[3,1,1,1],[2,2,1,1],[2,1,2,1],[2,1,1,2],[1,3,1,1],[1,2,2,1],[1,2,1,2],[1,1,3,1],[1,1,2,2],[1,1,1,3],[4,1,1],[3,2,1],[3,1,2],[2,3,1],[2,2,2],[2,1,3],[1,4,1],[1,3,2],[1,2,3],[1,1,4],[5,1],[4,2],[3,3],[2,4],[1,5],[6]]"
-                , json);
-        Assertions.assertEquals(9, SolitaireNumbers.max);
+        Assertions.assertEquals(9, SolitaireNumbers.solitaireNumbers(new int[]{1, -2, 0, 7, -14, -80, 1}));
     }
     @Test
     void solataireNumbersX4() {
-        Gson gson = new Gson();
-        String result = gson.toJson(SolitaireNumbers.solitaireNumbers(new int[]{1, -2, 0, 7, -14, -80, 1, 12}));
-        Assertions.assertEquals(
-                "[[1,1,1,1,1,1,1],[2,1,1,1,1,1],[1,2,1,1,1,1],[1,1,2,1,1,1],[1,1,1,2,1,1],[1,1,1,1,2,1],[1,1,1,1,1,2],[3,1,1,1,1],[2,2,1,1,1],[2,1,2,1,1],[2,1,1,2,1],[2,1,1,1,2],[1,3,1,1,1],[1,2,2,1,1],[1,2,1,2,1],[1,2,1,1,2],[1,1,3,1,1],[1,1,2,2,1],[1,1,2,1,2],[1,1,1,3,1],[1,1,1,2,2],[1,1,1,1,3],[4,1,1,1],[3,2,1,1],[3,1,2,1],[3,1,1,2],[2,3,1,1],[2,2,2,1],[2,2,1,2],[2,1,3,1],[2,1,2,2],[2,1,1,3],[1,4,1,1],[1,3,2,1],[1,3,1,2],[1,2,3,1],[1,2,2,2],[1,2,1,3],[1,1,4,1],[1,1,3,2],[1,1,2,3],[1,1,1,4],[5,1,1],[4,2,1],[4,1,2],[3,3,1],[3,2,2],[3,1,3],[2,4,1],[2,3,2],[2,2,3],[2,1,4],[1,5,1],[1,4,2],[1,3,3],[1,2,4],[1,1,5],[6,1],[5,2],[4,3],[3,4],[2,5],[1,6]]"
-                , result);
-        Assertions.assertEquals(21, SolitaireNumbers.max);
+        Assertions.assertEquals(21, SolitaireNumbers.solitaireNumbers(new int[]{1, -2, 0, 7, -14, -80, 1, 12}));
     }
 
     @Test
     void solataireNumbersX5() {
-        Gson gson = new Gson();
-        String result = gson.toJson(SolitaireNumbers.solitaireNumbers(new int[]{-1, -2, -1, -7, -14, -80, -2, -2, -1, -12}));
-        Assertions.assertNotNull(SolitaireNumbers.chosenJumpPattern);
-        Assertions.assertEquals(-15, SolitaireNumbers.max);
+        Assertions.assertEquals(-15, SolitaireNumbers.solitaireNumbers(new int[]{-1, -2, -1, -7, -14, -80, -2, -2, -1, -12}));
     }
 
     @Test
     void solataireNumbersX6() {
-        Gson gson = new Gson();
-        String result = gson.toJson(SolitaireNumbers.solitaireNumbers(new int[]{-1, -2, -1, -7, -14, -80, -2, -2, -1, -12}));
-        Assertions.assertNotNull(SolitaireNumbers.chosenJumpPattern);
-        Assertions.assertEquals(-15, SolitaireNumbers.max);
+        Assertions.assertEquals(-15, SolitaireNumbers.solitaireNumbers(new int[]{-1, -2, -1, -7, -14, -80, -2, -2, -1, -12}));
+    }
+
+    @Test
+    void solataireNumbersHuge() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(27);
+        for (int i = 0; i < 3; i++) {
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(0);
+        }
+        Assertions.assertEquals(27, SolitaireNumbers.solitaireNumbers(
+                arrayList.stream().mapToInt(i -> i).toArray()
+        ));
     }
 }
