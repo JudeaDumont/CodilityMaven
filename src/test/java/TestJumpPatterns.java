@@ -35,4 +35,12 @@ public class TestJumpPatterns {
                 , result);
         Assertions.assertEquals(21, SolitaireNumbers.max);
     }
+
+    @Test
+    void solataireNumbersX5() {
+        Gson gson = new Gson();
+        String result = gson.toJson(SolitaireNumbers.solitaireNumbers(new int[]{-1, -2, -1, -7, -14, -80, -2, -2, -1, -12}));
+        Assertions.assertNotNull(SolitaireNumbers.chosenJumpPattern);
+        Assertions.assertEquals(-15, SolitaireNumbers.max);
+    }
 }
