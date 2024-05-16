@@ -3,6 +3,9 @@ package org.example;
 import java.util.ArrayList;
 public class SolitaireNumbers {
     //process 7182727 jumps per chunk
+    //its so obvious, figure out the left most bit value (its just a bitshift left of the size of the array give or take.),
+    // and add that., and add 1.
+
     public static int solitaireNumbers(int[] A) {
         String bitmask = getPositiveBitMap(A);
         int allJumps = getAllJumps(bitmask, A);
