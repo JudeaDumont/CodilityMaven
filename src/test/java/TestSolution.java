@@ -4,6 +4,8 @@ import org.example.Solution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 class TestSolution {
     @Test
     void solution1041() {
@@ -67,5 +69,22 @@ class TestSolution {
     @Test
     void solataireNumbers5() {
         Assertions.assertEquals(10, SolitaireNumbers.solitaireNumbers(new int[]{-5, -1, -1, 1, -2, 0, -9, -1, -4}));
+    }
+
+    @Test
+    void solataireNumbersHuge() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(27);
+        for (int i = 0; i < 500; i++) {
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(-1);
+            arrayList.add(0);
+        }
+        Assertions.assertEquals(27, SolitaireNumbers.solitaireNumbers(
+                arrayList.stream().mapToInt(i -> i).toArray()
+        ));
     }
 }

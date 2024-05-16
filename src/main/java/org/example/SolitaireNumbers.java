@@ -12,7 +12,7 @@ import java.util.Hashtable;
 public class SolitaireNumbers {
 
     public static Long max = null;
-    public static Hashtable<String, Long> memo = new Hashtable<>();
+    public static Hashtable<String, Long[]> memo = new Hashtable<>();
 
     public static ArrayList<Integer> chosenJumpPattern = null;
 
@@ -24,7 +24,9 @@ public class SolitaireNumbers {
         int k = 0;
         for (int i = newJumpPattern.size() - 1; i > -1; i--) { //reverse iteration will find best match faster
             if (memo.containsKey(newJumpPattern.subList(0, i).toString())) {
-                memoMax = memo.get(newJumpPattern.subList(0, i).toString());
+                Long[] totalAtJump = memo.get(newJumpPattern.subList(0, i).toString());
+                memoMax = totalAtJump[0];
+                j = Math.toIntExact(totalAtJump[1]);
                 k = i - 1;
                 break;
             }
@@ -35,12 +37,9 @@ public class SolitaireNumbers {
         }
 
         ArrayList<Integer> newMemo = new ArrayList<>(newJumpPattern.subList(0, k));
-        for (int i = 0; i < newMemo.size(); i++) {
-            j += newMemo.get(i);
-        }
         for (; k < newJumpPattern.size(); ++k) {
             newMemo.add(newJumpPattern.get(k));
-            memo.put(newMemo.toString(), total);
+            memo.put(newMemo.toString(), new Long[]{total, (long) j});
             j += newJumpPattern.get(k);
             total += a[j];
             int pause = 0;
@@ -61,14 +60,12 @@ public class SolitaireNumbers {
             first.add(1);
         }
 
-
         //debug
         ArrayList<ArrayList<Integer>> allJumpPatterns = new ArrayList<>();
         allJumpPatterns.add(first);
 
         //first call to the actual traversal method
         traverseMemoizeAndFindMax(A, first);
-
 
         //relies on early return to not have superfluous iterations,
         // but it is close to Math.pow(2, A.length - 1),
