@@ -84,7 +84,7 @@ public class TestSolitaireNumbers {
     void solataireNumbersHuge7X() {
         ArrayList<Integer> arrayList = new ArrayList<>();
         arrayList.add(27);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             arrayList.add(-1);
             arrayList.add(-1);
             arrayList.add(-1);

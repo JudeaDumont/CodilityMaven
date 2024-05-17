@@ -1,47 +1,27 @@
 package org.example;
 
-import java.util.ArrayList;
 public class SolitaireNumbers {
-    //process 7182727 jumps per chunk
-    //its so obvious, figure out the left most bit value (its just a bitshift left of the size of the array give or take.),
-    // and add that., and add 1.
-
     public static int solitaireNumbers(int[] A) {
         String bitmask = getPositiveBitMap(A);
         int allJumps = getAllJumps(bitmask, A);
-        ArrayList<String> allPossibleJumpPatterns = getAllPossibleJumpPatterns(bitmask);
-        int max = getMaxPossiblePoints(allPossibleJumpPatterns, allJumps, A);
-        return max;
-    }
-
-    private static int getMaxPossiblePoints(ArrayList<String> allPossibleJumpPatterns, int allJumps, int[] a) {
         int max = allJumps;
-        for (int i = 0; i < allPossibleJumpPatterns.size(); i++) {
-            int thisJump = allJumps;
-            String s = allPossibleJumpPatterns.get(i);
-            for (int c = 0; c < s.length(); c++) {
-                if (s.charAt(c) == '0') {
-                    thisJump -= a[c];
-                    int pause = 0;
-                }
-            }
-            if (thisJump > max) {
-                max = thisJump;
-            }
-        }
-        return max;
-    }
-
-    private static ArrayList<String> getAllPossibleJumpPatterns(String bitmask) {
-        ArrayList<String> jumpPatterns = new ArrayList<>();
         String inbetweenDigits = getInbetweenDigits(bitmask);
         for (long i = 0; i < Long.parseLong(inbetweenDigits, 2); ++i) {
+            int thisJump = allJumps;
             String jumpPattern = "1" + getBinaryString(i, inbetweenDigits.length()) + "1";
             if (isConformentPattern(jumpPattern)) {
-                jumpPatterns.add(jumpPattern);
+                for (int c = 0; c < jumpPattern.length(); c++) {
+                    if (jumpPattern.charAt(c) == '0') {
+                        thisJump -= A[c];
+                        int pause = 0;
+                    }
+                }
+                if (thisJump > max) {
+                    max = thisJump;
+                }
             }
         }
-        return jumpPatterns;
+        return max;
     }
 
     public static String getBinaryString(long i, long length) {
