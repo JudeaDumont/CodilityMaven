@@ -13,7 +13,6 @@ public class SolitaireNumbers {
                 for (int c = 0; c < jumpPattern.length(); c++) {
                     if (jumpPattern.charAt(c) == '0') {
                         thisJump -= A[c];
-                        int pause = 0;
                     }
                 }
                 if (thisJump > max) {
