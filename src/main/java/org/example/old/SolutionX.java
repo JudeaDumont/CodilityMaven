@@ -1,6 +1,6 @@
-package org.example;
+package org.example.old;
 
-public class Solution {
+public class SolutionX {
     public static int solution(int N) {
         String binaryString = Integer.toBinaryString(N);
         System.out.println(binaryString);

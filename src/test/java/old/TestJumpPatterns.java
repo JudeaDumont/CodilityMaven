@@ -1,4 +1,6 @@
-import org.example.OldSolitaireNumbers;
+package old;
+
+import org.example.old.OldSolitaireNumbers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

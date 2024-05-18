@@ -1,6 +1,6 @@
-package org.example;
+package org.example.old;
 
-public class SolitaireNumbers {
+public class OldSolitaireNumbers2 {
     public static int solitaireNumbers(int[] A) {
         String bitmask = getPositiveBitMap(A);
         int allJumps = getAllJumps(bitmask, A);

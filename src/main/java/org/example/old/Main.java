@@ -1,7 +1,7 @@
-package org.example;
+package org.example.old;
 
 public class Main {
     public static void main(String[] args) {
-        assert(Solution.solution(1041) == 3);
+        assert(SolutionX.solution(1041) == 3);
     }
 }

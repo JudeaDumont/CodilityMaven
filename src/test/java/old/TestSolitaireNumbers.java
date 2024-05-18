@@ -1,9 +1,11 @@
+package old;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.example.SolitaireNumbers.*;
+import static org.example.old.OldSolitaireNumbers2.*;
 
 public class TestSolitaireNumbers {
     @Test
