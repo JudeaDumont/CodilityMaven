@@ -1,6 +1,6 @@
-package SolitaireNumbersCurrent;
+package old2;
 
-import org.example.SolitaireNumbersCurrent.Solution;
+import org.example.old2.Old2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class TestGetInnerLoops {
     @Test
     void TestGetBitmask() {
-        Solution s = new Solution();
+        Old2 s = new Old2();
         long[] innerLoops = s.getInnerLoops(
                 3, 2
         );

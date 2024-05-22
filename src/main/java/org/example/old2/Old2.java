@@ -1,8 +1,6 @@
-package org.example.SolitaireNumbersCurrent;
+package org.example.old2;
 
-import java.util.Arrays;
-
-public class Solution {
+public class Old2 {
     public int solution(int[] A) {
         int numberOfLongsForBitMask = getNumberOfLongsForBitMask(A);
         long[] bitmask = getBitmask(numberOfLongsForBitMask);
