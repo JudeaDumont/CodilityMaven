@@ -21,4 +21,13 @@ public class TestNeedsNegativeRun {
 
         Assertions.assertFalse(actual);
     }
+    @Test
+    void testNeedsNegativeRun3(){
+
+        Solution s = new Solution();
+        boolean actual = s.needsNegativeRun(new boolean[]{
+                true, false, false, false, false, false, true, false, false, false, false, false, true});
+
+        Assertions.assertFalse(actual);
+    }
 }

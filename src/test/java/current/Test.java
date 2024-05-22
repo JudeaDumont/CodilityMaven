@@ -11,6 +11,10 @@ public class Test {
     void solataireNumbers() {
         Solution s = new Solution();
         Assertions.assertEquals(6, s.solution(new int[]{1, 2, 3}));
+
+        Assertions.assertEquals(2, s.solution(new int[]{1, -2, -2, -2, -2, -2, 1}));
+
+        Assertions.assertEquals(3, s.solution(new int[]{1, -2, -2, -2, -2, -2, 1, -2, -2, -2, -2, -2, 1}));
     }
 
 }
