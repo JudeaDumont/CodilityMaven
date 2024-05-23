@@ -34,7 +34,7 @@ public class Solution {
 
 
     // Starting position where there is a pointer every 7 elements:
-    //  v                           v
+    //  v                           v                                  v                     v
     // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = -28
     //size = 20, v = 5
 
@@ -44,31 +44,31 @@ public class Solution {
     //  v           v               v              v                   v                     v
     //  v               v           v                   v              v                     v
     //  v                   v       v                        v         v                     v
-    //  v                       v   v                             v    v                     v
+    //  v                       v   v                             v                          v
     //  v       v                        v    v                             v                v
     //  v           v                    v         v                        v                v
     //  v               v                v              v                   v                v
     //  v                   v            v                   v              v                v
-    //  v                       v        v                        v         v                v
-    //  v                       v        v                             v    v                v
+    //  v                       v        v                        v                          v
+    //  v                       v        v                             v                     v
     //  v           v                         v    v                             v           v
     //  v               v                     v         v                        v           v
     //  v                   v                 v              v                   v           v
-    //  v                       v             v                   v              v           v
-    //  v                       v             v                        v         v           v
-    //  v                       v             v                             v    v           v
+    //  v                       v             v                   v                          v
+    //  v                       v             v                        v                     v
+    //  v                       v             v                             v                v
     //  v               v                          v    v                             v      v
     //  v                   v                      v         v                        v      v
-    //  v                       v                  v              v                   v      v
-    //  v                       v                  v                   v              v      v
-    //  v                       v                  v                        v         v      v
-    //  v                       v                  v                             v    v      v
+    //  v                       v                  v              v                          v
+    //  v                       v                  v                   v                     v
+    //  v                       v                  v                        v                v
+    //  v                       v                  v                             v           v
     //  v                  v                            v    v                            v  v
-    //  v                       v                       v         v                       v  v
-    //  v                       v                       v              v                  v  v
-    //  v                       v                       v                   v             v  v
-    //  v                       v                       v                        v        v  v
-    //  v                       v                       v                             v   v  v
+    //  v                       v                       v         v                          v
+    //  v                       v                       v              v                     v
+    //  v                       v                       v                   v                v
+    //  v                       v                       v                        v           v
+    //  v                       v                       v                             v      v
     // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
 
     // what about the second iteration? oof
