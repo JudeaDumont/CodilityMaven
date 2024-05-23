@@ -33,33 +33,51 @@ public class Solution {
 
 
 
-    // Starting:
-    //  v                       v                            v                            v  v
+    // Starting position where there is a pointer every 7 elements:
+    //  v                           v
     // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = -28
     //size = 20, v = 5
 
-    // backup:
-    //  v                       v                            v                        v      v
-    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = -28
-    //size = 20, v = 5
+    //I think this is it.
+    //  v   v                       v    v                             v                     v
+    //  v       v                   v         v                        v                     v
+    //  v           v               v              v                   v                     v
+    //  v               v           v                   v              v                     v
+    //  v                   v       v                        v         v                     v
+    //  v                       v   v                             v    v                     v
+    //  v       v                        v    v                             v                v
+    //  v           v                    v         v                        v                v
+    //  v               v                v              v                   v                v
+    //  v                   v            v                   v              v                v
+    //  v                       v        v                        v         v                v
+    //  v                       v        v                             v    v                v
+    //  v           v                         v    v                             v           v
+    //  v               v                     v         v                        v           v
+    //  v                   v                 v              v                   v           v
+    //  v                       v             v                   v              v           v
+    //  v                       v             v                        v         v           v
+    //  v                       v             v                             v    v           v
+    //  v               v                          v    v                             v      v
+    //  v                   v                      v         v                        v      v
+    //  v                       v                  v              v                   v      v
+    //  v                       v                  v                   v              v      v
+    //  v                       v                  v                        v         v      v
+    //  v                       v                  v                             v    v      v
+    //  v                  v                            v    v                            v  v
+    //  v                       v                       v         v                       v  v
+    //  v                       v                       v              v                  v  v
+    //  v                       v                       v                   v             v  v
+    //  v                       v                       v                        v        v  v
+    //  v                       v                       v                             v   v  v
+    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
 
-    // backup:
-    //  v                       v                            v                   v           v
-    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = -28
-    //size = 20, v = 5
+    // what about the second iteration? oof
+    //  v                           v                                  v                     v
 
-    // backup:
-    //  v                       v                            v              v                v
-    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = -28
-    //size = 20, v = 5
-
-    // backup until 5 on other side
-
-    // move in:
-    //  v                   v                           v                             v      v
-    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = 26
-    //size = 20, v = 5
-
+    //  v   v                       v    v                             v                     v
+    //  v       v                        v                             v                     v
+    //  v           v                         v                             v                v
+    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
 
     public int solution(int[] A) {
         if (A.length == 0) {
