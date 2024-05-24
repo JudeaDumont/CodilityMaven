@@ -1,5 +1,10 @@
 package org.example.current;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Set;
+
 public class Solution {
     //  v                       v  v
     // [1, -2, -2, -2, -2, -2, -2, 1] = 0
@@ -32,52 +37,10 @@ public class Solution {
     //size = 19, v = 6
 
 
-
     // Starting position where there is a pointer every 7 elements:
     //  v                           v                                  v                     v
     // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1] = -28
     //size = 20, v = 5
-
-    //I think this is it.
-    //  v   v                       v    v                             v                     v
-    //  v       v                   v         v                        v                     v
-    //  v           v               v              v                   v                     v
-    //  v               v           v                   v              v                     v
-    //  v                   v       v                        v         v                     v
-    //  v                       v   v                             v                          v
-    //  v       v                        v    v                             v                v
-    //  v           v                    v         v                        v                v
-    //  v               v                v              v                   v                v
-    //  v                   v            v                   v              v                v
-    //  v                       v        v                        v                          v
-    //  v                       v        v                             v                     v
-    //  v           v                         v    v                             v           v
-    //  v               v                     v         v                        v           v
-    //  v                   v                 v              v                   v           v
-    //  v                       v             v                   v                          v
-    //  v                       v             v                        v                     v
-    //  v                       v             v                             v                v
-    //  v               v                          v    v                             v      v
-    //  v                   v                      v         v                        v      v
-    //  v                       v                  v              v                          v
-    //  v                       v                  v                   v                     v
-    //  v                       v                  v                        v                v
-    //  v                       v                  v                             v           v
-    //  v                  v                            v    v                            v  v
-    //  v                       v                       v         v                          v
-    //  v                       v                       v              v                     v
-    //  v                       v                       v                   v                v
-    //  v                       v                       v                        v           v
-    //  v                       v                       v                             v      v
-    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
-
-    // what about the second iteration? oof
-    //  v                           v                                  v                     v
-
-    //  v   v                       v    v                             v                     v
-    //  v       v                        v                             v                     v
-    //  v           v                         v                             v                v
-    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
 
     public int solution(int[] A) {
         if (A.length == 0) {
@@ -117,14 +80,80 @@ public class Solution {
         }
         return false;
     }
+    public Integer getNegativeRun(int[] a, int currentRunTotal, boolean[] visited) {
 
-    public void getNegativeRun(int[] a, int currentRunTotal, boolean[] visited) {
-        for (int i = 0; i < a.length; i++) {
-            if (!visited[i]) {
+        int start = 0;
+        int end = 0;
+        boolean negativeStreak = false;
 
+        for (int i = 0; i < visited.length; i++) {
+            boolean b = visited[i];
+            if (!b) {
+                if (negativeStreak) {
+                    ++end;
+                } else {
+                    negativeStreak = true;
+                    start = i;
+                    end = i;
+                }
+            } else {
+                if (negativeStreak) {
+                    if (end - start > 5) {
+                        currentRunTotal += processGap(Arrays.copyOfRange(a, start, end));
+                    }
+                }
+                start = 0;
+                end = 0;
+                negativeStreak = false;
             }
         }
+        return 0;
+    }
 
+
+    // I think this is it.
+    //  v   v                       v    v                             v                     v
+    //  v       v                   v         v                        v                     v
+    //  v           v               v              v                   v                     v
+    //  v               v           v                   v              v                     v
+    //  v                   v       v                        v         v                     v
+    //  v                       v   v                             v                          v
+    //  v       v                        v    v                             v                v
+    //  v           v                    v         v                        v                v
+    //  v               v                v              v                   v                v
+    //  v                   v            v                   v              v                v
+    //  v                       v        v                        v                          v
+    //  v                       v        v                             v                     v
+    //  v           v                         v    v                             v           v
+    //  v               v                     v         v                        v           v
+    //  v                   v                 v              v                   v           v
+    //  v                       v             v                   v                          v
+    //  v                       v             v                        v                     v
+    //  v                       v             v                             v                v
+    //  v               v                          v    v                             v      v
+    //  v                   v                      v         v                        v      v
+    //  v                       v                  v              v                          v
+    //  v                       v                  v                   v                     v
+    //  v                       v                  v                        v                v
+    //  v                       v                  v                             v           v
+    //  v                  v                            v    v                            v  v
+    //  v                       v                       v         v                          v
+    //  v                       v                       v              v                     v
+    //  v                       v                       v                   v                v
+    //  v                       v                       v                        v           v
+    //  v                       v                       v                             v      v
+    // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
+    private int processGap(int[] ints) {
+        if(ints.length == 6){
+            int max = ints[0];
+            for (int i = 1; i < ints.length; i++) {
+                if(ints[i] > max){
+                    max = ints[i];
+                }
+            }
+            return max;
+        }
+        return 0;
     }
 
     public Integer getPositiveRun(int[] A, Integer currentRunTotal, boolean[] visited) {
