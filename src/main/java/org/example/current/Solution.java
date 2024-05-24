@@ -1,9 +1,6 @@
 package org.example.current;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Set;
 
 public class Solution {
     //  v                       v  v
@@ -62,9 +59,9 @@ public class Solution {
             return currentRunTotal;
         }
 
-        getNegativeRun(A, currentRunTotal, visited);
+        currentRunTotal+= getNegativeRun(A, visited);
 
-        return 0;
+        return currentRunTotal;
     }
 
     public boolean needsNegativeRun(boolean[] visited) {
@@ -80,11 +77,14 @@ public class Solution {
         }
         return false;
     }
-    public Integer getNegativeRun(int[] a, int currentRunTotal, boolean[] visited) {
+
+    public Integer getNegativeRun(int[] a, boolean[] visited) {
 
         int start = 0;
         int end = 0;
         boolean negativeStreak = false;
+
+        int negativeRunTotal = 0;
 
         for (int i = 0; i < visited.length; i++) {
             boolean b = visited[i];
@@ -94,12 +94,12 @@ public class Solution {
                 } else {
                     negativeStreak = true;
                     start = i;
-                    end = i;
+                    end = i + 1;
                 }
             } else {
                 if (negativeStreak) {
                     if (end - start > 5) {
-                        currentRunTotal += processGap(Arrays.copyOfRange(a, start, end));
+                        negativeRunTotal += processGap(Arrays.copyOfRange(a, start, end));
                     }
                 }
                 start = 0;
@@ -107,7 +107,7 @@ public class Solution {
                 negativeStreak = false;
             }
         }
-        return 0;
+        return negativeRunTotal;
     }
 
 
@@ -144,16 +144,42 @@ public class Solution {
     //  v                       v                       v                             v      v
     // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
     private int processGap(int[] ints) {
-        if(ints.length == 6){
-            int max = ints[0];
-            for (int i = 1; i < ints.length; i++) {
-                if(ints[i] > max){
-                    max = ints[i];
-                }
-            }
-            return max;
+        if (ints.length == 6) {
+            return getMaxFrom6(ints);
+        } else if(ints.length == 7) {
+            return getMaxFrom7(ints);
         }
         return 0;
+    }
+
+    //  v                            v
+    //       v
+    //            v
+    //                 v
+    //                      v
+    //                           v
+    // -1, -321, -21, -21, -21, -9, -1]
+    private int getMaxFrom7(int[] ints) {
+        int max = Integer.MIN_VALUE;
+        for (int i = 1; i < ints.length -1; i++) {
+            if(ints[i] > max){
+                max = ints[i];
+            }
+        }
+        if(ints[0] + ints[6] > max){
+            max = ints[0] + ints[6];
+        }
+        return max;
+    }
+
+    private static int getMaxFrom6(int[] ints) {
+        int max = ints[0];
+        for (int i = 1; i < ints.length; i++) {
+            if (ints[i] > max) {
+                max = ints[i];
+            }
+        }
+        return max;
     }
 
     public Integer getPositiveRun(int[] A, Integer currentRunTotal, boolean[] visited) {
