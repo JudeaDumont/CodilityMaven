@@ -142,14 +142,41 @@ public class Solution {
     //  v                       v                       v                   v                v
     //  v                       v                       v                        v           v
     //  v                       v                       v                             v      v
+
+    //  v                       v                            v    v                          v
+    //  v                       v                            v         v                     v
+    //  v                       v                            v              v                v
+    //  v                       v                            v                   v           v
+    //  v                       v                            v                        v      v
+    //  v                       v                            v                            v  v
     // [1, -1, -1, -1, -1, -1, -7, -10, -10, -10, -10, -20, -21, -21, -21, -21, -21, -1, -1, 1]
     private int processGap(int[] ints) {
         if (ints.length == 6) {
             return getMaxFrom6(ints);
         } else if(ints.length == 7) {
             return getMaxFrom7(ints);
+        } else if(ints.length == 8){
+            return getMaxFromEight(ints);
         }
         return 0;
+    }
+
+    //  v                             v
+    //       v                        v
+    //            v
+    //                 v
+    //                      v
+    //                           v
+    //       v                            v
+    //[-13, -10, -21, -21, -21, -21, -8, -1]
+    private int getMaxFromEight(int[] ints) {
+        int max = Integer.MIN_VALUE;
+        for (int i = 1; i < ints.length -1; i++) {
+            if(ints[i] > max){
+                max = ints[i];
+            }
+        }
+        return max;
     }
 
     //  v                            v

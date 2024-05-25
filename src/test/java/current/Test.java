@@ -27,6 +27,22 @@ public class Test {
         Solution s = new Solution();
         Assertions.assertEquals(1, s.solution(new int[]{1, -1, -3, -3, -3, -3, -3, -1, 2}));
 
+        Assertions.assertEquals(2, s.solution(new int[]{1, -1, -3, -3, -1, -3, -3, -1, 2}));
+
+        Assertions.assertEquals(2, s.solution(new int[]{1, -1, -1, -3, -3, -3, -3, -1, 2}));
+
+        Assertions.assertEquals(2, s.solution(new int[]{1, -1, -3, -1, -3, -3, -3, -1, 2}));
+
+        Assertions.assertEquals(2, s.solution(new int[]{1, -1, -3, -3, -3, -1, -3, -1, 2}));
+
+        Assertions.assertEquals(2, s.solution(new int[]{1, -1, -3, -3, -3, -3, -1, -1, 2}));
+
         Assertions.assertEquals(2, s.solution(new int[]{2, -6, -5, -4, -3, -2, -1, 1}));
+    }
+
+    @org.junit.jupiter.api.Test
+    void solataireNumbersStageThree() {
+        Solution s = new Solution();
+        Assertions.assertEquals(1, s.solution(new int[]{1, -1, -3, -3, -3, -3, -3, -3, -1, 2}));
     }
 }
