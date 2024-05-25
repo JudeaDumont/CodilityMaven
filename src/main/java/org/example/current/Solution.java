@@ -1,5 +1,6 @@
 package org.example.current;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Solution {
@@ -59,7 +60,7 @@ public class Solution {
             return currentRunTotal;
         }
 
-        currentRunTotal+= getNegativeRun(A, visited);
+        currentRunTotal += getNegativeRun(A, visited);
 
         return currentRunTotal;
     }
@@ -153,9 +154,9 @@ public class Solution {
     private int processGap(int[] ints) {
         if (ints.length == 6) {
             return getMaxFrom6(ints);
-        } else if(ints.length == 7) {
+        } else if (ints.length == 7) {
             return getMaxFrom7(ints);
-        } else if(ints.length == 8){
+        } else if (ints.length == 8) {
             return getMaxFromEight(ints);
         }
         return 0;
@@ -170,13 +171,43 @@ public class Solution {
     //       v                            v
     //[-13, -10, -21, -21, -21, -21, -8, -1]
     private int getMaxFromEight(int[] ints) {
+        ArrayList<ArrayList<String>> allJumps = new ArrayList<>();
+
+        int[] stationaryPositions = getStationaryPointerPositions(ints.length);
+        int[] inbetweenPositions = getInbetweenPointerPositions(stationaryPositions);
+
         int max = Integer.MIN_VALUE;
-        for (int i = 1; i < ints.length -1; i++) {
-            if(ints[i] > max){
-                max = ints[i];
+        while (stationaryPositions[stationaryPositions.length - 1] < ints.length + 1) {//one iteration more after it goes off the end
+            for (int j = 0; j < 6; j++) {
+                int inbetweenPositionsTotal = 0;
+                for (int i = 0; i < inbetweenPositions.length; i++) {
+                    inbetweenPositionsTotal += ints[inbetweenPositions[i] + j];
+                    inbetweenPositionsTotal += ints[stationaryPositions[i]];
+                }
+                if(inbetweenPositionsTotal > max){
+                    max = inbetweenPositionsTotal;
+                }
             }
         }
-        return max;
+
+        return 0;
+    }
+
+    public static int[] getInbetweenPointerPositions(int[] pointerPositions) {
+        int[] inbetweenPointerPositions = new int[pointerPositions.length];
+        for (int i = 0; i < pointerPositions.length; i++) {
+            inbetweenPointerPositions[i] = pointerPositions[i] - 6;
+        }
+        return inbetweenPointerPositions;
+    }
+
+    public static int[] getStationaryPointerPositions(int length) {
+        int initialPointers = length / 7;
+        int[] pointerPositions = new int[initialPointers];
+        for (int i = 0; i < initialPointers; i++) {
+            pointerPositions[i] = ((i + 1) * 7) - 1;
+        }
+        return pointerPositions;
     }
 
     //  v                            v
@@ -188,12 +219,12 @@ public class Solution {
     // -1, -321, -21, -21, -21, -9, -1]
     private int getMaxFrom7(int[] ints) {
         int max = Integer.MIN_VALUE;
-        for (int i = 1; i < ints.length -1; i++) {
-            if(ints[i] > max){
+        for (int i = 1; i < ints.length - 1; i++) {
+            if (ints[i] > max) {
                 max = ints[i];
             }
         }
-        if(ints[0] + ints[6] > max){
+        if (ints[0] + ints[6] > max) {
             max = ints[0] + ints[6];
         }
         return max;
