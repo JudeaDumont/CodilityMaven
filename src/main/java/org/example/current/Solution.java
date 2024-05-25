@@ -182,7 +182,7 @@ public class Solution {
                 int inbetweenPositionsTotal = 0;
                 for (int i = 0; i < inbetweenPositions.length; i++) {
                     inbetweenPositionsTotal += ints[inbetweenPositions[i] + j];
-                    if (j+6 < ints.length) {//jump to the end if it is possible, no more steps
+                    if (inbetweenPositions[i] + j + 6 < ints.length) {//jump to the end if it is possible, no more steps
                         inbetweenPositionsTotal += ints[stationaryPositions[i]];
                     }
                 }
