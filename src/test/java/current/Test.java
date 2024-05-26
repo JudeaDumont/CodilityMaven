@@ -44,5 +44,19 @@ public class Test {
     void solataireNumbersStageThree() {
         Solution s = new Solution();
         Assertions.assertEquals(0, s.solution(new int[]{1, -1, -3, -3, -3, -3, -3, -3, -1, 2}));
+        Assertions.assertEquals(1, s.solution(new int[]{1, -1, -1, -3, -3, -3, -3, -3, -1, 2}));
+        Assertions.assertEquals(1, s.solution(new int[]{1, -1, -1, -3, -3, -3, -3, -1, -3, 2}));
+        Assertions.assertEquals(2, s.solution(new int[]{1, -3, -3, -1, -3, -3, -3, -3, -3, 2}));
+        Assertions.assertEquals(2, s.solution(new int[]{1, -3, -3, -3, -1, -3, -3, -3, -3, 2}));
+        Assertions.assertEquals(2, s.solution(new int[]{1, -3, -3, -3, -3, -1, -3, -3, -3, 2}));
+        Assertions.assertEquals(2, s.solution(new int[]{1, -3, -3, -3, -3, -3, -1, -3, -3, 2}));
+        Assertions.assertEquals(0, s.solution(new int[]{1, -3, -3, -3, -3, -3, -3, -1, -3, 2}));
+        Assertions.assertEquals(0, s.solution(new int[]{1, -1, -3, -3, -3, -3, -3, -3, -1, -3, 2}));
+    }
+
+    @org.junit.jupiter.api.Test
+    void solataireNumbersStageFour() {
+        Solution s = new Solution();
+        Assertions.assertEquals(0, s.solution(new int[]{1, -3, -3, -3, -3, -3, -3, -3, -3, -3, 2}));
     }
 }

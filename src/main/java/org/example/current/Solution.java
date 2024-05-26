@@ -155,7 +155,7 @@ public class Solution {
             return getMaxFrom6(ints);
         } else if (ints.length == 7) {
             return getMaxFrom7(ints);
-        } else if (ints.length == 8) {
+        } else if (ints.length > 7) {
             return getMaxFromEight(ints);
         }
         return 0;
