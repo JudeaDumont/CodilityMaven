@@ -1,6 +1,5 @@
 package org.example.current;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Solution {
@@ -171,7 +170,6 @@ public class Solution {
     //       v                            v
     //[-13, -10, -21, -21, -21, -21, -8, -1]
     private int getMaxFromEight(int[] ints) {
-        ArrayList<ArrayList<String>> allJumps = new ArrayList<>();
 
         int[] stationaryPositions = getStationaryPointerPositions(ints.length);
         int[] inbetweenPositions = getInbetweenPointerPositions(stationaryPositions);
@@ -179,20 +177,38 @@ public class Solution {
         int max = Integer.MIN_VALUE;
         while (stationaryPositions[stationaryPositions.length - 1] < ints.length + 1) {//one iteration more after it goes off the end
             for (int j = 0; j < 6; j++) {
+                String[] jumps = new String[ints.length];
+                Arrays.fill(jumps, " ");
+
                 int inbetweenPositionsTotal = 0;
                 for (int i = 0; i < inbetweenPositions.length; i++) {
                     inbetweenPositionsTotal += ints[inbetweenPositions[i] + j];
+                    jumps[inbetweenPositions[i] + j] = "v";
                     if (inbetweenPositions[i] + j + 6 < ints.length) {//jump to the end if it is possible, no more steps
                         inbetweenPositionsTotal += ints[stationaryPositions[i]];
+                        jumps[stationaryPositions[i]] = "v";
                     }
                 }
-                if(inbetweenPositionsTotal > max){
+                String string = Arrays.toString(jumps);
+                if (inbetweenPositionsTotal > max) {
                     max = inbetweenPositionsTotal;
+                }
+                if (stationaryPositions[stationaryPositions.length - 1] == ints.length - 1) {
+                    return max;
+                }
+            }
+            for (int i = 0; i < stationaryPositions.length; i++) {
+                int stopThreshold = (i + 1) * 6 + 1;
+                if (stationaryPositions[i] < stopThreshold) {
+                    ++stationaryPositions[i];
+                }
+                if (inbetweenPositions[i] < stopThreshold) {
+                    ++inbetweenPositions[i];
                 }
             }
         }
 
-        return 0;
+        return max;
     }
 
     public static int[] getInbetweenPointerPositions(int[] pointerPositions) {
