@@ -59,4 +59,21 @@ public class Test {
         Solution s = new Solution();
         Assertions.assertEquals(0, s.solution(new int[]{1, -3, -3, -3, -3, -3, -3, -3, -3, -3, 2}));
     }
+
+    @org.junit.jupiter.api.Test
+    void solataireNumbersStageFive() {
+        Solution s = new Solution();
+        Assertions.assertEquals(-5, s.solution(new int[]{-1, -1, -3, -3, -3, -3, -3, -1, -3, -3, -3, -2}));
+        Assertions.assertEquals(-5, s.solution(new int[]{-1, -3, -1, -3, -3, -3, -3, -3, -1, -3, -3, -2}));
+        Assertions.assertEquals(-5, s.solution(new int[]{-1, -3, -3, -1, -3, -3, -3, -3, -3, -1, -3, -2}));
+        Assertions.assertEquals(-5, s.solution(new int[]{-1, -3, -3, -3, -1, -3, -3, -3, -3, -3, -1, -2}));
+    }
+
+    @org.junit.jupiter.api.Test
+    void solataireNumbersStageSix() {
+        Solution s = new Solution();
+        Assertions.assertEquals(-6, s.solution(new int[]
+                {-1, -1, -3, -3, -3, -3, -3, -1, -3, -3, -3, -3, -1, -3, -4, -2}
+        ));
+    }
 }

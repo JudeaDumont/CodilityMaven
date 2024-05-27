@@ -169,46 +169,124 @@ public class Solution {
     //                           v
     //       v                            v
     //[-13, -10, -21, -21, -21, -21, -8, -1]
+
+    //   v                       v   v                       v   v                       v   v                       v   v                       v   v                       v
+    //       v                   v       v                   v       v                   v       v                   v       v                   v       v
+    //           v               v           v               v           v               v           v               v           v               v           v
+    //               v           v               v           v               v           v               v           v               v           v               v
+    //                   v       v                   v       v                   v       v                   v       v                   v       v                   v
+    //                       v   v                       v   v                       v   v                       v   v                       v   v                       v
+
+    //       v                       v   v                       v   v                       v   v                       v   v                       v   v
+    //           v                   v       v                   v       v                   v       v                   v       v                   v       v
+    //               v               v           v               v           v               v           v               v           v               v           v
+    //                   v           v               v           v               v           v               v           v               v           v               v
+    //                       v       v                   v       v                   v       v                   v       v                   v       v                   v
+    //                       v       v                       v   v                       v   v                       v   v                       v   v                       v
+
+    //           v                       v   v                       v   v                       v   v                       v   v                       v
+    //               v                   v       v                   v       v                   v       v                   v       v                   v
+    //                   v               v           v               v           v               v           v               v           v               v
+    //                       v           v               v           v               v           v               v           v               v           v
+    //                       v           v                   v       v                   v       v                   v       v                   v       v
+    //                       v           v                       v   v                       v   v                       v   v                       v   v
+
+    //               v                       v   v                       v   v                       v   v                       v   v                       v
+    //                   v                   v       v                   v       v                   v       v                   v       v                   v
+    //                       v               v           v               v           v               v           v               v           v               v
+    //                       v               v               v           v               v           v               v           v               v           v
+    //                       v               v                   v       v                   v       v                   v       v                   v       v
+    //                       v               v                       v   v                       v   v                       v   v                       v
+
+    //                   v                       v   v                       v   v                       v   v                       v   v                       v
+    //                       v                   v       v                   v       v                   v       v                   v       v                   v
+    //                       v                   v           v               v           v               v           v               v           v               v
+    //                       v                   v               v           v               v           v               v           v               v           v
+    //                       v                   v                   v       v                   v       v                   v       v                   v
+    //                       v                   v                       v   v                       v   v                       v   v                       v
+
+    //                       v                       v   v                       v   v                       v   v                       v   v                       v
+    //                       v                       v       v                   v       v                   v       v                   v       v                   v
+    //                       v                       v           v               v           v               v           v               v           v               v
+    //                       v                       v               v           v               v           v               v           v               v           v
+    //                       v                       v                   v       v                   v       v                   v       v                   v
+    //                       v                       v                       v   v                       v   v                       v   v                       v
+    // [-1, -1, -1, -1, -1, -1, -7, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
     private int getMaxFromEight(int[] ints) {
 
         int[] stationaryPositions = getStationaryPointerPositions(ints.length);
         int[] inbetweenPositions = getInbetweenPointerPositions(stationaryPositions);
 
         int max = Integer.MIN_VALUE;
-        while (stationaryPositions[stationaryPositions.length - 1] < ints.length + 1) {//one iteration more after it goes off the end
-            for (int j = 0; j < 6; j++) {
-                String[] jumps = new String[ints.length];
-                Arrays.fill(jumps, " ");
+        int startPosition = 0;
+        int expandingSection = 0;
+        while (stationaryPositions[stationaryPositions.length - 1] < ints.length + 1) {
+            int currentSum = 0;
 
-                int inbetweenPositionsTotal = 0;
-                for (int i = 0; i < inbetweenPositions.length; i++) {
-                    inbetweenPositionsTotal += ints[inbetweenPositions[i] + j];
-                    jumps[inbetweenPositions[i] + j] = "v";
-                    if (inbetweenPositions[i] + j + 6 < ints.length) {//jump to the end if it is possible, no more steps
-                        inbetweenPositionsTotal += ints[stationaryPositions[i]];
-                        jumps[stationaryPositions[i]] = "v";
+            String string = createReadableString(stationaryPositions, inbetweenPositions, ints.length);
+            for (int i = 0; i < inbetweenPositions.length; i++) {
+                currentSum += ints[inbetweenPositions[i]];
+                if (inbetweenPositions[i] + 6 >= ints.length) {
+                    //hop out
+                    i = inbetweenPositions.length;
+                } else {
+                    currentSum += ints[stationaryPositions[i]];
+                    if (stationaryPositions[i] + 6 >= ints.length) {
+                        //hop out
+                        i = inbetweenPositions.length;
                     }
                 }
-                String string = Arrays.toString(jumps);
-                if (inbetweenPositionsTotal > max) {
-                    max = inbetweenPositionsTotal;
-                }
-                if (stationaryPositions[stationaryPositions.length - 1] == ints.length - 1) {
-                    return max;
-                }
             }
-            for (int i = 0; i < stationaryPositions.length; i++) {
-                int stopThreshold = (i + 1) * 6 + 1;
-                if (stationaryPositions[i] < stopThreshold) {
+            if (currentSum > max) {
+                max = currentSum;
+            }
+
+            //iteration logic // it's more like one section expands while the others are pushed right // and once a section is expanded, the next one is expanded
+
+            //increment each inbetween position
+            //if the first position is 6, that means we set it to +1 of whatever the old start position was.
+            if (inbetweenPositions[expandingSection] == ((expandingSection + 1) * 6) - 1 &&
+                    stationaryPositions[expandingSection] == ((expandingSection + 1) * 6) + 5) {
+                //section is complete
+                ++expandingSection;
+            } else if (inbetweenPositions[expandingSection] == ((expandingSection + 1) * 6) - 1) {
+                //expand
+                for (int i = expandingSection; i < stationaryPositions.length; i++) {
                     ++stationaryPositions[i];
                 }
-                if (inbetweenPositions[i] < stopThreshold) {
-                    ++inbetweenPositions[i];
+
+                ++startPosition;
+
+                //reset inbetween
+                for (int i = expandingSection; i < inbetweenPositions.length; i++) {
+                    inbetweenPositions[i] = (i * 6) + startPosition;
+                }
+            } else {
+                for (int i = expandingSection; i < inbetweenPositions.length; i++) {
+                    if (inbetweenPositions[i] != ((i + 1) * 7) - 2) {//takes care of left gap getting too big
+                        ++inbetweenPositions[i];
+                    }
                 }
             }
         }
 
         return max;
+    }
+
+    public static String createReadableString(int[] stationaryPositions, int[] inbetweenPositions, int length) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            stringBuilder.append("0");
+        }
+
+        for (int i = 0; i < stationaryPositions.length; i++) {
+            stringBuilder.replace(stationaryPositions[i], stationaryPositions[i] + 1, "v");
+        }
+
+        for (int i = 0; i < inbetweenPositions.length; i++) {
+            stringBuilder.replace(inbetweenPositions[i], inbetweenPositions[i] + 1, "v");
+        }
+        return stringBuilder.toString();
     }
 
     public static int[] getInbetweenPointerPositions(int[] pointerPositions) {
