@@ -259,7 +259,7 @@ public class Solution {
 
                 //reset inbetween
                 for (int i = expandingSection; i < inbetweenPositions.length; i++) {
-                    inbetweenPositions[i] = (i * 6) + startPosition;
+                    inbetweenPositions[i] = (i * 7) + startPosition;
                 }
             } else {
                 for (int i = expandingSection; i < inbetweenPositions.length; i++) {

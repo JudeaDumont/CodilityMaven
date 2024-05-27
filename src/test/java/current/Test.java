@@ -74,6 +74,7 @@ public class Test {
         Solution s = new Solution();
         Assertions.assertEquals(-6, s.solution(new int[]
                 {-1, -1, -3, -3, -3, -3, -3, -1, -3, -3, -3, -3, -1, -3, -4, -2}
+                //v00000v0000v00
         ));
     }
 }
