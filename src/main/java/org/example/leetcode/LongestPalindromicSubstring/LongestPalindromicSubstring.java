@@ -1,7 +1,5 @@
 package org.example.leetcode.LongestPalindromicSubstring;
 
-import java.util.TreeMap;
-
 public class LongestPalindromicSubstring {
     public static String longestPalindromicSubstring(String s) {
         if (s.isEmpty()) {
@@ -20,7 +18,7 @@ public class LongestPalindromicSubstring {
         int end = s.length() - 1;
         boolean run = true;
 
-        TreeMap<Integer, String> treeMap = new TreeMap<>();
+        String maxString = String.valueOf(s.charAt(0));
         boolean skip = false;
 
         while (run) {
@@ -35,7 +33,9 @@ public class LongestPalindromicSubstring {
                         if (distance == 2 || distance == 1 || distance == 0 || distance == -1) {
                             //palindrome
                             String palindrome = s.substring(start, end + 1);
-                            treeMap.put(palindrome.length(), palindrome);
+                            if(palindrome.length() > maxString.length()){
+                                maxString = palindrome;
+                            }
                             checkPalindrome = false;
                         } else {
                             ++startC;
@@ -52,12 +52,12 @@ public class LongestPalindromicSubstring {
                 if (start == end) {
                     end = s.length() - 1;
                     ++start;
-                    if ((!treeMap.isEmpty() && treeMap.lastEntry().getKey() == end - start + 1) || start == end) {
+                    if ((maxString.length() >= end - start + 1) || start == end) {
                         run = false;
                     }
                 }
             }
         }
-        return treeMap.isEmpty() ? String.valueOf(s.charAt(0)) : treeMap.pollLastEntry().getValue();
+        return maxString;
     }
 }
