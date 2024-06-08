@@ -16,7 +16,6 @@ public class zigzagString {
     //Y A  H R
     //P    I
 
-
     //0, 4, 8, 12
     //1, 3, 5, 7, 9, 11, 13
     //2, 6, 10
