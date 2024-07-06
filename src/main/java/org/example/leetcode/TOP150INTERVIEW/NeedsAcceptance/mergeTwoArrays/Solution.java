@@ -1,4 +1,4 @@
-package org.example.leetcode.mergeTwoArrays;
+package org.example.leetcode.TOP150INTERVIEW.NeedsAcceptance.mergeTwoArrays;
 
 public class Solution {
     public void mergeTwoArrays(int[] a, int[] b) {
