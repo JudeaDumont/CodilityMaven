@@ -11,8 +11,10 @@ public class SolutionX {
 
         for (int i = 0; i < N; i++) {
             for (int k = 1; k <= 6; k++) {
-                if (i + k < N) {
-                    dp[i + k] = Math.max(dp[i + k], dp[i] + A[i + k]);
+                int ik = i + k;
+                if (ik < N) {
+                    int next = dp[i] + A[ik];
+                    dp[ik] = Math.max(dp[ik], next);
                 }
             }
         }
