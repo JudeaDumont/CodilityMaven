@@ -1,6 +1,6 @@
 package org.example.leetcode.mergeTwoArrays;
 
-import ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.TOP150INTERVIEW.NeedsAcceptance.mergeTwoArrays.Solution;
+import leetcode.NeedsAcceptance.mergeTwoArrays.Solution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

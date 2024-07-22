@@ -3,7 +3,7 @@ package leetcode.CorrectAssignment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.FastStringTraversal.CorrectAssignment.lengthOfLongestSubstring;
+import static leetcode.FastStringTraversal.FastStringTraversal.CorrectAssignment.lengthOfLongestSubstring;
 
 
 public class TestLengthOfLongestSubstring {

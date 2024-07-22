@@ -3,7 +3,7 @@ package leetcode.ZigZagConvert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.ZigzagString.zigzagString.convert;
+import static leetcode.ZigZagConvert.ZigzagString.zigzagString.convert;
 
 public class TestZigZagConvert {
     @Test

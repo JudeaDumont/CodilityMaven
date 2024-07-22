@@ -2,7 +2,7 @@ package org.example.leetcode.ImplementRegularExpression;
 
 import org.junit.jupiter.api.Test;
 
-import static ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.ImplementRegularExpression.RegularExpression.isMatch;
+import static org.example.leetcode.ImplementRegularExpression.ImplementRegularExpression.RegularExpression.isMatch;
 
 class RegularExpressionTest {
 

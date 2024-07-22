@@ -2,7 +2,7 @@ package leetcode.LongestPalindromicSubstring;
 
 import org.junit.jupiter.api.Test;
 
-import static ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.LongestPalindromicSubstring.LongestPalindromicSubstring.longestPalindromicSubstring;
+import static leetcode.LongestPalindromicSubstring.LongestPalindromicSubstring.LongestPalindromicSubstring.longestPalindromicSubstring;
 
 public class TestLongestPalindromicSubstring {
     @Test
