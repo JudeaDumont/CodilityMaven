@@ -1,4 +1,4 @@
-package quizSolutions;
+package quizSolutions.java.streams;
 
 import java.util.Arrays;
 import java.util.List;
