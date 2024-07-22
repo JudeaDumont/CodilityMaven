@@ -1,6 +1,6 @@
 package org.example.leetcode.removeDuplicates;
 
-import org.example.leetcode.TOP150INTERVIEW.NeedsAcceptance.removeDuplicates.Solution;
+import ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.TOP150INTERVIEW.NeedsAcceptance.removeDuplicates.Solution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

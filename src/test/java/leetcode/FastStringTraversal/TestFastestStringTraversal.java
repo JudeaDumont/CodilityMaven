@@ -3,7 +3,7 @@ package leetcode.FastStringTraversal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.example.leetcode.FastStringTraversal.Solution.lengthOfLongestSubstring;
+import static ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.FastStringTraversal.Solution.lengthOfLongestSubstring;
 
 public class TestFastestStringTraversal {
     @Test

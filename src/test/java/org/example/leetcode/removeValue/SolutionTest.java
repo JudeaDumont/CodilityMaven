@@ -1,6 +1,6 @@
 package org.example.leetcode.removeValue;
 
-import org.example.leetcode.TOP150INTERVIEW.NeedsAcceptance.removeValue.Solution;
+import ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.TOP150INTERVIEW.NeedsAcceptance.removeValue.Solution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

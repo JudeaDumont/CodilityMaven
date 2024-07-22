@@ -3,7 +3,7 @@ package leetcode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.example.leetcode.MedianOfTwoSortedArrays.MedianOfTwoSortedArrays.findMedianSortedArrays;
+import static ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.old2ReallyHardJumpingProblem.old2ReallyHardJumpingProblemCode.leetcode.MedianOfTwoSortedArrays.MedianOfTwoSortedArrays.findMedianSortedArrays;
 
 public class TestMedianOfTwoSortedArrays {
     @Test
