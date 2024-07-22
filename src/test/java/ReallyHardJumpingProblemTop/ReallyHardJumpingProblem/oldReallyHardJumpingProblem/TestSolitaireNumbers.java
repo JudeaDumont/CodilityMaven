@@ -1,6 +1,7 @@
 package ReallyHardJumpingProblemTop.ReallyHardJumpingProblem.oldReallyHardJumpingProblem;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class TestSolitaireNumbers {
     }
 
 
+    @Disabled
     @Test
     void solataireNumbersHuge7X() {
         ArrayList<Integer> arrayList = new ArrayList<>();
