@@ -23,19 +23,9 @@ public class CycleDetecter {
             for (Node link : node.getLinks()) {
                 Edge<Node, Node> edge = new Edge<>(node, link);
                 int edgeHashCode = edge.hashCode();
-                if (visitedNodes.containsKey(link) && !visitedEdges.contains(edgeHashCode)) {
-                    //cycle
-                    if (!cyclicNodes.containsKey(link)) {
-                        cyclicNodes.put(link, new Edge<>(visitedNodes.get(link), link));
-                    }
-                    cyclicNodes.put(link, edge);
-                    visitedEdges.add(edgeHashCode);
-                }
-                else if(visitedNodes.containsKey(link) && visitedEdges.contains(edgeHashCode)){
-                    //skip, this path has already been visited by a previous traversal
-                    return;
-                }
-                else {
+
+                if (!visitedNodes.containsKey(link)) {
+                    //new link
                     visitedNodes.put(link, node);
                     if (!visitedNodes.containsKey(node)) {
                         visitedNodes.put(node, null);
@@ -43,6 +33,16 @@ public class CycleDetecter {
                     }
                     visitedEdges.add(edgeHashCode);
                     traverse(link);
+                } else if (!visitedEdges.contains(edgeHashCode)) {
+                    // same linked node but different edge == cycle
+                    if (!cyclicNodes.containsKey(link)) {
+                        cyclicNodes.put(link, new Edge<>(visitedNodes.get(link), link));
+                    }
+                    cyclicNodes.put(link, edge);
+                    visitedEdges.add(edgeHashCode);
+                } else {
+                    // skip, this path has already been visited by a previous traversal
+                    return;
                 }
             }
         } else {
