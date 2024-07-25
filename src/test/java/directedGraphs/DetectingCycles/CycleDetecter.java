@@ -1,11 +1,14 @@
 package directedGraphs.DetectingCycles;
 
+import lombok.Getter;
+
 import java.util.*;
 
 public class CycleDetecter {
     private final Map<Node, Node> visitedNodes = new HashMap<>();
     private final Set<Integer> visitedEdges = new HashSet<>();
     private final NodeEdgeMap cyclicNodes = new NodeEdgeMap();
+    @Getter
     private final Set<Node> leaves = new HashSet<>();
 
     public NodeEdgeMap determineCycles(List<Node> nodes) {
@@ -16,7 +19,7 @@ public class CycleDetecter {
     }
 
     private void traverse(Node node) {
-        if (node.getLinks()!=null) {
+        if (node.getLinks() != null) {
             for (Node link : node.getLinks()) {
                 Edge<Node, Node> edge = new Edge<>(node, link);
                 int edgeHashCode = edge.hashCode();
@@ -27,14 +30,22 @@ public class CycleDetecter {
                     }
                     cyclicNodes.put(link, edge);
                     visitedEdges.add(edgeHashCode);
-                } else {
+                }
+                else if(visitedNodes.containsKey(link) && visitedEdges.contains(edgeHashCode)){
+                    //skip, this path has already been visited by a previous traversal
+                    return;
+                }
+                else {
                     visitedNodes.put(link, node);
+                    if (!visitedNodes.containsKey(node)) {
+                        visitedNodes.put(node, null);
+                        visitedEdges.add(new Edge<>(null, node).hashCode());
+                    }
                     visitedEdges.add(edgeHashCode);
                     traverse(link);
                 }
             }
-        }
-        else {
+        } else {
             leaves.add(node);
             visitedEdges.add(new Edge<>(node, null).hashCode());
         }
