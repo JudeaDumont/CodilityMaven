@@ -19,12 +19,15 @@ public class CycleDetecter {
     }
 
     private void traverse(Node node) {
+        if (Objects.equals(node.getId(), "e")) {
+            int stop = 0;
+        }
         if (!visitedNodes.containsKey(node)) {
             visitedNodes.put(node, null);
             visitedEdges.add(new Edge<>(null, node).hashCode());
-            if (node.getLinks()!=null) {
+            if (node.getLinks() != null) {
                 for (Node link : node.getLinks()) {
-                    if(visitedNodes.containsKey(link)){
+                    if (visitedNodes.containsKey(link)) {
                         // node outside the graph is now pointing to something in the graph
                         visitedEdges.add(new Edge<>(node, link).hashCode());
                         visitedEdges.remove(new Edge<>(null, link).hashCode());
@@ -37,8 +40,10 @@ public class CycleDetecter {
                 Edge<Node, Node> edge = new Edge<>(node, link);
                 int edgeHashCode = edge.hashCode();
 
-                if (!visitedNodes.containsKey(link)) {
-                    //new link
+                if (!visitedNodes.containsKey(link)
+                        //|| visitedNodes.get(link) == null
+                ) {
+                    //new link // or node was visited but now has a node linking to it
                     visitedNodes.put(link, node);
                     visitedEdges.add(edgeHashCode);
                     traverse(link);

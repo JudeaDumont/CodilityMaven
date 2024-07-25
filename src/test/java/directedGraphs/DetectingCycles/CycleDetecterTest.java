@@ -118,7 +118,7 @@ class CycleDetecterTest {
         Assertions.assertEquals(nodeEdgeMap.getSize(), 4);
     }
     @Test
-    void detectCycle7() {
+    void externalNodePointsToINternalNode() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c2 = new Node(null, "c2");
@@ -131,5 +131,21 @@ class CycleDetecterTest {
         Node d = new Node(List.of(a), "d");
 
         Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, d)).getSize(), 0);
+    }
+    @Test
+    void joinGraphs() {
+        CycleDetecter cycleDetecter = new CycleDetecter();
+
+        Node c2 = new Node(null, "c2");
+        Node c1 = new Node(null, "c1");
+        Node b2 = new Node(null, "b2");
+        Node b1 = new Node(null, "b1");
+        Node b = new Node(List.of(b1, b2), "b");
+        Node c = new Node(List.of(c1, c2), "c");
+        Node a = new Node(List.of(b, c), "a");
+        Node d = new Node(List.of(a), "d");
+        Node e = new Node(List.of(d), "e");
+
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, e, d)).getSize(), 0);
     }
 }
