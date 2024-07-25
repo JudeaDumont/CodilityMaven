@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class NodeEdgeMap {
 
-    private Map<Node, LinkedList<Edge<Node, Node>>> map;
+    private final Map<Node, LinkedList<Edge<Node, Node>>> map;
     private int edgeCount;
 
     public NodeEdgeMap() {
@@ -17,6 +17,10 @@ public class NodeEdgeMap {
     public void put(Node node, Edge<Node, Node> edge) {
         map.computeIfAbsent(node, k -> new LinkedList<>()).add(edge);
         edgeCount++;
+    }
+
+    public boolean containsKey(Node node) {
+        return map.containsKey(node);
     }
 
     public LinkedList<Edge<Node, Node>> get(Node node) {

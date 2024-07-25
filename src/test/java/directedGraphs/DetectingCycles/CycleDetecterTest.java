@@ -25,7 +25,7 @@ class CycleDetecterTest {
         Node b = new Node(List.of(c));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c)).getSize(), 1);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c)).getSize(), 2);
     }
     @Test
     void detectNoCycle2() {
@@ -53,7 +53,7 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 1);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
     }
     @Test
     void detectCycle3() {
@@ -67,7 +67,7 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 3);
     }
     @Test
     void detectCycle4() {
@@ -81,6 +81,6 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 1);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
     }
 }

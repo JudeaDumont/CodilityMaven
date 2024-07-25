@@ -1,13 +1,12 @@
 package directedGraphs.DetectingCycles;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CycleDetecter {
-    private final Set<Node> visitedNodes = new HashSet<>();
+    private final Map<Node, Node> visitedNodes = new HashMap<>();
     private final Set<Integer> visitedEdges = new HashSet<>();
     private final NodeEdgeMap cyclicNodes = new NodeEdgeMap();
+    private final Set<Node> leaves = new HashSet<>();
 
     public NodeEdgeMap determineCycles(List<Node> nodes) {
         for (Node node : nodes) {
@@ -21,25 +20,28 @@ public class CycleDetecter {
             for (Node link : node.getLinks()) {
                 Edge<Node, Node> edge = new Edge<>(node, link);
                 int edgeHashCode = edge.hashCode();
-                if (visitedNodes.contains(link) && !visitedEdges.contains(edgeHashCode)) {
+                if (visitedNodes.containsKey(link) && !visitedEdges.contains(edgeHashCode)) {
                     //cycle
+                    if (!cyclicNodes.containsKey(link)) {
+                        cyclicNodes.put(link, new Edge<>(visitedNodes.get(link), link));
+                    }
                     cyclicNodes.put(link, edge);
                     visitedEdges.add(edgeHashCode);
                 } else {
-                    visitedNodes.add(node);
+                    visitedNodes.put(link, node);
                     visitedEdges.add(edgeHashCode);
                     traverse(link);
                 }
             }
         }
         else {
-            visitedNodes.add(node);
+            leaves.add(node);
             visitedEdges.add(new Edge<>(node, null).hashCode());
         }
     }
 
 
     private boolean allVisited(List<Node> links) {
-        return links == null || visitedNodes.containsAll(links);
+        return links == null || visitedNodes.keySet().containsAll(links);
     }
 }
