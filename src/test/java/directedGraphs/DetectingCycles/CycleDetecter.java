@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class CycleDetecter {
     private final Set<Node> visitedNodes = new HashSet<>();
-    private final Set<Edge<Node, Node>> visitedEdges = new HashSet<>();
+    private final Set<Integer> visitedEdges = new HashSet<>();
     private final NodeEdgeMap cyclicNodes = new NodeEdgeMap();
 
     public NodeEdgeMap determineCycles(List<Node> nodes) {
@@ -20,19 +20,21 @@ public class CycleDetecter {
         if (node.getLinks()!=null) {
             for (Node link : node.getLinks()) {
                 Edge<Node, Node> edge = new Edge<>(node, link);
-                if (visitedNodes.contains(link) && !visitedEdges.contains(edge)) {
+                int edgeHashCode = edge.hashCode();
+                if (visitedNodes.contains(link) && !visitedEdges.contains(edgeHashCode)) {
                     //cycle
                     cyclicNodes.put(link, edge);
+                    visitedEdges.add(edgeHashCode);
                 } else {
                     visitedNodes.add(node);
-                    visitedEdges.add(edge);
+                    visitedEdges.add(edgeHashCode);
                     traverse(link);
                 }
             }
         }
         else {
             visitedNodes.add(node);
-            visitedEdges.add(new Edge<>(node, null));
+            visitedEdges.add(new Edge<>(node, null).hashCode());
         }
     }
 

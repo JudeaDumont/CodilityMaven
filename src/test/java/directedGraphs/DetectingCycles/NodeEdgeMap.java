@@ -7,13 +7,16 @@ import java.util.Map;
 public class NodeEdgeMap {
 
     private Map<Node, LinkedList<Edge<Node, Node>>> map;
+    private int edgeCount;
 
     public NodeEdgeMap() {
         map = new HashMap<>();
+        edgeCount = 0;
     }
 
     public void put(Node node, Edge<Node, Node> edge) {
         map.computeIfAbsent(node, k -> new LinkedList<>()).add(edge);
+        edgeCount++;
     }
 
     public LinkedList<Edge<Node, Node>> get(Node node) {
@@ -21,7 +24,7 @@ public class NodeEdgeMap {
     }
 
     public int getSize(){
-        return map.size();
+        return edgeCount;
     }
 
     public static void main(String[] args) {
