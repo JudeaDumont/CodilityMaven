@@ -99,4 +99,37 @@ class CycleDetecterTest {
 
         Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
     }
+    @Test
+    void detectCycle6() {
+        CycleDetecter cycleDetecter = new CycleDetecter();
+
+        Node c2 = new Node(null, "c2");
+        Node c1 = new Node(null, "c1");
+        Node b2 = new Node(null, "b2");
+        Node b1 = new Node(null, "b1");
+        Node b = new Node(List.of(b1, b2), "b");
+        Node c = new Node(List.of(c1, c2), "c");
+        Node a = new Node(List.of(b, c), "a");
+        b1.setLinks(new LinkedList<>(List.of(a)));
+        b2.setLinks(new LinkedList<>(List.of(c2)));
+
+
+        NodeEdgeMap nodeEdgeMap = cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2));
+        Assertions.assertEquals(nodeEdgeMap.getSize(), 4);
+    }
+    @Test
+    void detectCycle7() {
+        CycleDetecter cycleDetecter = new CycleDetecter();
+
+        Node c2 = new Node(null, "c2");
+        Node c1 = new Node(null, "c1");
+        Node b2 = new Node(null, "b2");
+        Node b1 = new Node(null, "b1");
+        Node b = new Node(List.of(b1, b2), "b");
+        Node c = new Node(List.of(c1, c2), "c");
+        Node a = new Node(List.of(b, c), "a");
+        Node d = new Node(List.of(a), "d");
+
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, d)).getSize(), 0);
+    }
 }

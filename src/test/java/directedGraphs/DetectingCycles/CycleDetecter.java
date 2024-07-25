@@ -19,6 +19,19 @@ public class CycleDetecter {
     }
 
     private void traverse(Node node) {
+        if (!visitedNodes.containsKey(node)) {
+            visitedNodes.put(node, null);
+            visitedEdges.add(new Edge<>(null, node).hashCode());
+            if (node.getLinks()!=null) {
+                for (Node link : node.getLinks()) {
+                    if(visitedNodes.containsKey(link)){
+                        // node outside the graph is now pointing to something in the graph
+                        visitedEdges.add(new Edge<>(node, link).hashCode());
+                        visitedEdges.remove(new Edge<>(null, link).hashCode());
+                    }
+                }
+            }
+        }
         if (node.getLinks() != null) {
             for (Node link : node.getLinks()) {
                 Edge<Node, Node> edge = new Edge<>(node, link);
@@ -27,10 +40,6 @@ public class CycleDetecter {
                 if (!visitedNodes.containsKey(link)) {
                     //new link
                     visitedNodes.put(link, node);
-                    if (!visitedNodes.containsKey(node)) {
-                        visitedNodes.put(node, null);
-                        visitedEdges.add(new Edge<>(null, node).hashCode());
-                    }
                     visitedEdges.add(edgeHashCode);
                     traverse(link);
                 } else if (!visitedEdges.contains(edgeHashCode)) {
@@ -42,7 +51,6 @@ public class CycleDetecter {
                     visitedEdges.add(edgeHashCode);
                 } else {
                     // skip, this path has already been visited by a previous traversal
-                    return;
                 }
             }
         } else {
