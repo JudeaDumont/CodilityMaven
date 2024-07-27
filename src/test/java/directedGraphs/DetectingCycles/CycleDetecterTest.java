@@ -1,8 +1,11 @@
 package directedGraphs.DetectingCycles;
 
+import directedGraphs.DetectingCycles.RandomAccessSet.RandomAccessMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,21 +18,21 @@ class CycleDetecterTest {
         Node c = new Node(null);
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c)).getSize(), 0);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c)).size(), 0);
     }
 
     @Test
-    void detectCycle() {
+    void detectNoCycle2() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c = new Node(null);
         Node b = new Node(List.of(c));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c)).getSize(), 2);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c)).size(), 0);
     }
     @Test
-    void detectNoCycle2() {
+    void detectNoCycle3() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c2 = new Node(null);
@@ -40,10 +43,10 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 0);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).size(), 0);
     }
     @Test
-    void detectCycle2() {
+    void detectNoCycle4() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c2 = new Node(null);
@@ -54,10 +57,10 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).size(), 0);
     }
     @Test
-    void detectCycle3() {
+    void detectNoCycle5() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c2 = new Node(null);
@@ -68,10 +71,10 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 3);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).size(), 0);
     }
     @Test
-    void detectCycle4() {
+    void detectNoCycle6() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c2 = new Node(null);
@@ -82,10 +85,26 @@ class CycleDetecterTest {
         Node c = new Node(List.of(c1, c2));
         Node a = new Node(List.of(b, c));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).size(), 0);
+    }
+    @Test void detectCycle() {
+        CycleDetecter cycleDetecter = new CycleDetecter();
+        Node a = new Node(null, "a");
+        Node b = new Node(List.of(a), "b");
+        a.setLinks(new LinkedList<>(List.of(b)));
+        RandomAccessMap<Integer, HashSet<Node>> accessMap = cycleDetecter.determineCycles(List.of(a, b));
+        Assertions.assertEquals(accessMap.size(), 1);
+        Assertions.assertEquals(accessMap.at(0).size(), 2);
+    }
+    @Test void detectCycle2() {
+        CycleDetecter cycleDetecter = new CycleDetecter();
+        Node a = new Node(null, "a");
+        Node b = new Node(List.of(a), "b");
+        a.setLinks(new LinkedList<>(List.of(b)));
+        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a)).size(), 1);
     }
     @Test
-    void detectCycle5() {
+    void detectCycle3Edge() {
         CycleDetecter cycleDetecter = new CycleDetecter();
 
         Node c2 = new Node(null, "c2");
@@ -97,7 +116,9 @@ class CycleDetecterTest {
         Node a = new Node(List.of(b, c), "a");
         b1.setLinks(new LinkedList<>(List.of(a)));
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2)).getSize(), 2);
+        RandomAccessMap<Integer, HashSet<Node>> accessMap = cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2));
+        Assertions.assertEquals(accessMap.size(), 1);
+        Assertions.assertEquals(accessMap.at(0).size(), 3);
     }
     @Test
     void detectCycle6() {
@@ -114,8 +135,9 @@ class CycleDetecterTest {
         b2.setLinks(new LinkedList<>(List.of(c2)));
 
 
-        NodeEdgeMap nodeEdgeMap = cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2));
-        Assertions.assertEquals(nodeEdgeMap.getSize(), 4);
+        RandomAccessMap<Integer, HashSet<Node>> accessMap = cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2));
+        Assertions.assertEquals(accessMap.size(), 1);
+        Assertions.assertEquals(accessMap.at(0).size(), 3);
     }
     @Test
     void externalNodePointsToINternalNode() {
@@ -130,7 +152,8 @@ class CycleDetecterTest {
         Node a = new Node(List.of(b, c), "a");
         Node d = new Node(List.of(a), "d");
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, d)).getSize(), 0);
+        RandomAccessMap<Integer, HashSet<Node>> accessMap = cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, d));
+        Assertions.assertEquals(accessMap.size(), 0);
     }
     @Test
     void joinGraphs() {
@@ -146,6 +169,7 @@ class CycleDetecterTest {
         Node d = new Node(List.of(a), "d");
         Node e = new Node(List.of(d), "e");
 
-        Assertions.assertEquals(cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, e, d)).getSize(), 0);
+        RandomAccessMap<Integer, HashSet<Node>> accessMap = cycleDetecter.determineCycles(List.of(a, b, c, c1, c2, b1, b2, e, d));
+        Assertions.assertEquals(accessMap.size(), 0);
     }
 }
