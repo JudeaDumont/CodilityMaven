@@ -1,79 +1,58 @@
 package leetcode.fourSum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        HashMap<Integer, List<Integer>> result = new HashMap<>();
+        List<List<Integer>> result = new ArrayList<>();
+        Set<String> check = new HashSet<>();
+        Map<String, Integer> memo = new HashMap<>();
 
-        Arrays.sort(nums);
-        if (nums.length < 4) return new ArrayList<>();
-
-        int i = 0;
-        int l = 1;
-        int r = nums.length - 1;
-        int m = nums.length - 2;
-        while (true) {
-            int sum = nums[i] + nums[l] + nums[m] + nums[r];
-            if (sum == target) {
-                List<Integer> quad = List.of(nums[i], nums[l], nums[m], nums[r]);
-                result.put(quad.hashCode(), quad);
-                if (l + 1 != m) {
-                    ++l;
-                } else if (m + 1 != r) {
-                    r--;
-                } else if (i + 1 != l) {
-                    ++i;
-                    l = i + 1;
-                    r = nums.length - 1;
-                    if (l == r) {
-                        return result.values().stream().toList();
+        for (int i1 = 0; i1 < nums.length; i1++) {
+            for (int i2 = i1 + 1; i2 < nums.length; i2++) {
+                for (int i3 = i2 + 1; i3 < nums.length; i3++) {
+                    for (int i4 = i3 + 1; i4 < nums.length; i4++) {
+                        String id = createDistinct(nums[i1], nums[i2], nums[i3], nums[i4]);
+                        int memoNum = checkMemo(nums, memo, i1, i2, i3, i4);
+                        if (i1 != i2 && i2 != i3 && i3 != i4
+                                && !check.contains(id)
+                                && memoNum == target) {
+                            result.add(List.of(nums[i1], nums[i2], nums[i3], nums[i4]));
+                            check.add(id);
+                        }
                     }
-                    m = nums.length - 2;
-                } else {
-                    //they are next to each other
-                    return result.values().stream().toList();
-                }
-            } else if (sum < target) {
-                if (l + 1 != m) {
-                    ++l;
-                } else if (i + 1 != l) {
-                    //special case reset
-                    ++i;
-                    l = i + 1;
-                    r = nums.length - 1;
-                    if (l == r) {
-                        return result.values().stream().toList();
-                    }
-                    m = nums.length - 2;
-                } else if (r - 1 != m) {
-                    --r;
-                    //i, l and m are touching
-                } else {
-                    return result.values().stream().toList();
-                }
-            } else {
-                //Sum is greater than target
-                if (r - 1 != m) {
-                    --r;
-                } else if (m - 1 != l) {
-                    --m;
-                } else if (i + 1 != l) {
-                    //l, m and r are touching
-                    ++i;
-                    l = i + 1;
-                    r = nums.length - 1;
-                    if (l == r) {
-                        return result.values().stream().toList();
-                    }
-                    m = nums.length - 2;
-                } else {
-                    return result.values().stream().toList();
                 }
             }
         }
+        return result;
+    }
+
+    private static int checkMemo(int[] nums, Map<String, Integer> memo, int i1, int i2, int i3, int i4) {
+        String threeKey = i1 + "," + i2 + "," + i3;
+        if (memo.containsKey(threeKey)) {
+            return memo.get(threeKey) + nums[i4];
+        } else {
+            String twoKey = i1 + "," + i2;
+            if (memo.containsKey(twoKey)) {
+                int threeValue = memo.get(twoKey) + nums[i3];
+                memo.put(threeKey, threeValue);
+                return threeValue + nums[i4];
+            } else {
+                int twoValue = nums[i1] + nums[i2];
+                memo.put(twoKey, twoValue);
+                int threeValue = twoValue + nums[i3];
+                memo.put(threeKey, threeValue);
+                return threeValue + nums[i4];
+            }
+        }
+    }
+
+    private String createDistinct(int i1, int i2, int i3, int i4) {
+        int[] arr = {i1, i2, i3, i4};
+        Arrays.sort(arr);
+        return Arrays.stream(arr)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(","));
     }
 }
