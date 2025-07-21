@@ -1,0 +1,47 @@
+I was close in my whiteboard version of working through the problem,
+
+I did not make the connection that you are looking for the first decreasing value compared to the current iteration of I,
+
+I thought you would have to keep a list of integers to the right and check each one against the current iteration of I.
+
+So I then thought I would have to look from the other direction and try to find the minimal "out of order elements"
+
+perform a swap, and then perform some other operation.
+
+Had I realized that when walking left, you only need to know which one is decresaing from the current iteration (i.e. you are only comparing indexes next to each other) I would have popped the lid off the jar. eh, oh well.
+
+That's what this is for, to work through a problem, take the ego hit, study the correct solution and where I went wrong, and move forward.
+
+
+
+
+
+Complexity Analysis
+
+Let n be the size of the nums array.
+
+Time complexity: O(n)
+
+The first while loop runs at most n iterations, decrementing the variable i as it searches for the first decreasing element from the right.
+In the worst case, it checks all elements, so it takes O(n) time.
+
+The second while loop also runs at most n iterations, decrementing the variable j as it searches for the smallest element larger than
+nums[i]. Similarly, it can take O(n) time.
+
+The reverse function is called on a portion of the array, from index i + 1 to the end. In the worst case, this can cover the entire array,
+leading to a time complexity of O(n).
+
+The swap function runs in constant time, O(1), since it only exchanges two elements.
+
+Therefore, the overall time complexity is O(n).
+
+Space complexity: O(1)
+
+The function operates in-place on the nums array, meaning no extra space is used for storing additional data.
+
+Only a few constant space variables (i, j, and temp) are used.
+
+The built-in swap and reverse functions do not require additional space beyond what is already present in the input array.
+
+Hence, the space complexity is O(1).
+
